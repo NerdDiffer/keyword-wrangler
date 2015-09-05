@@ -1,17 +1,57 @@
 'use strict';
 
 var request = require('request');
+var async   = require('async');
+
+var dbSession     = require('../../src/backend/dbSessions.js');
+var resetDatabase = require('../resetDatabase.js');
 
 describe('The API', function() {
   it('should respond to a GET request at "/api/keywords"', function(done) {
-    var cb = function(err, res, body) {
-      expect(res.statusCode).toBe(200);
-      expect(body.foo).toEqual('bar');
-      done();
+    // Percolator does not allow you to directly return an array
+    var expected = {
+      '_items': [
+        { 'id': 1, 'value': 'Aubergine', 'categoryID': 1},
+        { 'id': 2, 'value': 'Onion', 'categoryID': 1},
+        { 'id': 3, 'value': 'Knife', 'categoryID': 2},
+      ]
     };
-    request.get({
-      'url': 'http://localhost:8080/api/keywords/',
-      'json': true
-    }, cb);
+
+    async.series([
+      function(callback) {
+        resetDatabase(dbSession, callback);
+      }, function(callback) {
+        dbSession.insert(
+          'keyword',
+          { 'value': 'Aubergine', 'categoryID': 1},
+          function(err) { callback(err); }
+        );
+      }, function(callback) {
+        dbSession.insert(
+          'keyword',
+          { 'value': 'Onion', 'categoryID': 1},
+          function(err) { callback(err); }
+        );
+      }, function(callback) {
+        dbSession.insert(
+          'keyword',
+          { 'value': 'Knife', 'categoryID': 2},
+          function(err) { callback(err); }
+        );
+      }
+    ], function(err, results) {
+         var requestOpts = {
+           'url': 'http://localhost:8080/api/keywords/',
+           'json': true
+         };
+
+         request.get(requestOpts, function(err, res, body) {
+           expect(res.statusCode).toBe(200);
+           expect(body).toEqual(expected);
+           done();
+         });
+       }
+    );
+
   });
 });
