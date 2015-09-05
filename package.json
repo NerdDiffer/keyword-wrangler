@@ -4,7 +4,8 @@
   "description": "An exercise app, to manage keywords",
   "main": "src/backend/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/jasmine-node --verbose --captureExceptions ./spec",
+    "start": "node src/backend/index.js"
   },
   "author": "Rafael <rafael@rafaelespinoza.com> (http://www.rafaelespinoza.com)",
   "license": "ISC",

@@ -10,6 +10,11 @@ AngularJS in front-end, connecting to a NodeJS RESTful API on back-end.
 
 Following Part 2 of Manuel Kiessling's, *The Node Craftsman Book*.
 
+##Get started
+
+`npm start` to start server  
+`npm test` run tests
+
 ###Components
 
 ####Front end
