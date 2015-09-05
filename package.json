@@ -1,14 +1,19 @@
 {
   "name": "keyword-wrangler",
-  "version": "0.0.1",
-  "description": "An exercise app, to manage keywords",
+  "version": "0.1.0",
+  "description": "An exercise app to manage keywords",
   "main": "src/backend/index.js",
   "scripts": {
     "test": "./node_modules/.bin/jasmine-node --verbose --captureExceptions ./spec",
     "start": "node src/backend/index.js"
   },
   "author": "Rafael <rafael@rafaelespinoza.com> (http://www.rafaelespinoza.com)",
+  "private": true,
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:NerdDiffer/keyword-wrangler.git"
+  },
   "dependencies": {
     "async": "^1.4.2",
     "bower": "^1.5.2",
