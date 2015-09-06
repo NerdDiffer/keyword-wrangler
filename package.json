@@ -4,8 +4,9 @@
   "description": "An exercise app to manage keywords",
   "main": "src/backend/index.js",
   "scripts": {
-    "test": "./node_modules/.bin/db-migrate up -- env test && ./node_modules/.bin/jasmine-node --verbose --captureExceptions ./spec",
-    "start": "node src/backend/index.js"
+    "pretest": "./node_modules/.bin/db-migrate up --env test",
+    "test": "./node_modules/.bin/jasmine-node --verbose --captureExceptions ./spec/",
+    "start": "node ./src/backend/index.js"
   },
   "author": "Rafael <rafael@rafaelespinoza.com> (http://www.rafaelespinoza.com)",
   "private": true,

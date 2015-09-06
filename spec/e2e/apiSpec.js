@@ -3,8 +3,8 @@
 var request = require('request');
 var async   = require('async');
 
-var Server = require('../../src/backend/server.js');
-var dbSession     = require('../../src/backend/dbSessions.js');
+var Server        = require('../../src/backend/server.js');
+var dbSession     = require('../../src/backend/dbSession.js');
 var resetDatabase = require('../resetDatabase.js');
 
 describe('The API', function() {
@@ -28,18 +28,20 @@ describe('The API', function() {
     });
   });
 
-  it('should respond to a GET request at "/api/keywords"', function(done) {
+  it('should respond to a GET request at "/api/keywords/"', function(done) {
     // Percolator does not allow you to directly return an array
     var expected = {
       '_items': [
         { 'id': 1, 'value': 'Aubergine', 'categoryID': 1},
         { 'id': 2, 'value': 'Onion', 'categoryID': 1},
-        { 'id': 3, 'value': 'Knife', 'categoryID': 2},
+        { 'id': 3, 'value': 'Knife', 'categoryID': 2}
       ]
     };
 
     async.series([
       function(callback) {
+        resetDatabase(dbSession, callback);
+      }, function(callback) {
         dbSession.insert(
           'keyword',
           { 'value': 'Aubergine', 'categoryID': 1},
@@ -59,6 +61,8 @@ describe('The API', function() {
         );
       }
     ], function(err, results) {
+         if (err) { throw(err); }
+
          var requestOpts = {
            'url': 'http://localhost:8081/api/keywords/',
            'json': true
@@ -72,5 +76,44 @@ describe('The API', function() {
        }
     );
 
+  });
+
+  it('should respond to a GET request at "/api/keywords/categories"', function(done) {
+    var expected = {
+      '_items': [
+        { 'id': 1, 'name': 'Vegetable' },
+        { 'id': 2, 'name': 'Utility' }
+      ]
+    };
+
+    async.series([
+      function(callback) {
+        resetDatabase(dbSession, callback);
+      }, function(callback) {
+        dbSession.insert(
+          'category',
+          { 'name': 'Vegetable' },
+          function(err) { callback(err); }
+        );
+      }, function (callback) {
+        dbSession.insert(
+          'category',
+          { 'name': 'Utility' },
+          function(err) { callback(err); }
+        );
+      }
+    ], function(err, results) {
+         if (err) { throw(err); }
+         var requestOpts = {
+           'url': 'http://localhost:8081/api/keywords/categories/',
+           'json': true
+         };
+
+         request.get(requestOpts, function(err, res, body) {
+           expect(res.statusCode).toBe(200);
+           expect(body).toEqual(expected);
+           done();
+         });
+    });
   });
 });
