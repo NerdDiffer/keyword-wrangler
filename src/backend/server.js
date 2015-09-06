@@ -4,7 +4,11 @@ var Percolator = require('percolator').Percolator;
 var dbSession  = require('./dbSessions.js');
 
 module.exports = function(port) {
-  var server = new Percolator( {'port': port, 'autoLink': false} );
+  var server = new Percolator({
+    'port': port,
+    'autoLink': false,
+    'staticDir': __dirname + '../../public'
+  });
 
   server.route('/api/keywords', {
     GET: function(req, res) {
