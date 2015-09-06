@@ -2,8 +2,10 @@
   "node": true,
   "globalstrict": true,
   "globals": {
-    "describe": false,
-    "it": false,
-    "expect": false
+    "describe"   : false,
+    "it"         : false,
+    "expect"     : false,
+    "beforeEach" : false,
+    "afterEach"  : false
   }
 }
