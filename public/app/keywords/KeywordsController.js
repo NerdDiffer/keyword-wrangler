@@ -3,7 +3,7 @@
 (function() {
   var app = angular.module('app');
 
-  app.controller('KeywordController', function($scope, RepositoryFactory, resolveEntity) {
+  app.controller('KeywordsController', function($scope, RepositoryFactory, resolveEntity) {
     /* Initialize Front End */
 
     // This happens immediately upon page load
@@ -76,49 +76,47 @@
         }
       ]
     };
-  });
 
-  /* Front-end Operations & Interactions */
+    /* Front-end Operations & Interactions */
 
-  // tell jshint to shut up about these two variables not being defined
-  /* globals $scope, KeywordsRepo */
+    $scope.createKeyword = function(newKeyword) {
+      $scope.broadcast('ngGridEventEndCellEdit');
 
-  $scope.createKeyword = function(newKeyword) {
-    $scope.broadcast('ngGridEventEndCellEdit');
+      if (newKeyword.value.length > 0) {
+        KeywordsRepo.createOne(newKeyword)
+          .then(function() {
+            KeywordsRepo.readAll()
+              .then(function(keywords) {
+                $scope.keywords = keywords;
+              });
+          });
+      }
+    };
 
-    if (newKeyword.value.length > 0) {
-      KeywordsRepo.createOne(newKeyword)
+    $scope.updateKeyword = function(keyword) {
+      $scope.broadcast('ngGridEventEndCellEdit');
+      KeywordsRepo.updateOne(keyword);
+    };
+
+    $scope.deleteKeyword = function(keyword) {
+      $scope.broadcast('ngGridEventEndCellEdit');
+      KeywordsRepo.deleteOne(keyword)
         .then(function() {
           KeywordsRepo.readAll()
             .then(function(keywords) {
               $scope.keywords = keywords;
             });
         });
-    }
-  };
+    };
 
-  $scope.updateKeyword = function(keyword) {
-    $scope.broadcast('ngGridEventEndCellEdit');
-    KeywordsRepo.updateOne(keyword);
-  };
+    $scope.stopEditingKeywordCategory = function() {
+      $scope.broadcast('ngGridEventEndCellEdit');
+    };
 
-  $scope.deleteKeyword = function(keyword) {
-    $scope.broadcast('ngGridEventEndCellEdit');
-    KeywordsRepo.deleteOne(keyword)
-      .then(function() {
-        KeywordsRepo.readAll()
-          .then(function(keywords) {
-            $scope.keywords = keywords;
-          });
-      });
-  };
+    $scope.$on('ngGridEventRows', function(newRows) {
+      $scope.broadcast('ngGridEventEndCellEdit');
+    });
 
-  $scope.stopEditingKeywordCategory = function() {
-    $scope.broadcast('ngGridEventEndCellEdit');
-  };
-
-  $scope.$on('ngGridEventRows', function(newRows) {
-    $scope.broadcast('ngGridEventEndCellEdit');
   });
 
 })();
