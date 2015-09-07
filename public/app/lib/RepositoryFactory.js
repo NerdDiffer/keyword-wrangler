@@ -8,6 +8,8 @@
   // template connecting to back-end REST APIs
   function RepositoryFactory(Restangular, $q) {
 
+    Restangular.setBaseUrl('/api/');
+
     var Repository = function(options) {
       this.endpoint = options.endpoint;
       this.retrieveItems = options.retrieveItems;

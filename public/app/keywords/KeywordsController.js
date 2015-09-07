@@ -64,7 +64,7 @@
         {
           field: 'keywordCategoryID',
           displayName: 'Category',
-          cellTemplate: 'app/keywords/partials/keywordsCategoryGridCell.html',
+          cellTemplate: 'app/keywords/partials/keywordCategoryGridCell.html',
           editableCellTemplate: 'app/keywords/partials/keywordCategoryGridCellEditor.html'
         },
         {
@@ -80,7 +80,7 @@
     /* Front-end Operations & Interactions */
 
     $scope.createKeyword = function(newKeyword) {
-      $scope.broadcast('ngGridEventEndCellEdit');
+      $scope.$broadcast('ngGridEventEndCellEdit');
 
       if (newKeyword.value.length > 0) {
         KeywordsRepo.createOne(newKeyword)
@@ -94,12 +94,12 @@
     };
 
     $scope.updateKeyword = function(keyword) {
-      $scope.broadcast('ngGridEventEndCellEdit');
+      $scope.$broadcast('ngGridEventEndCellEdit');
       KeywordsRepo.updateOne(keyword);
     };
 
     $scope.deleteKeyword = function(keyword) {
-      $scope.broadcast('ngGridEventEndCellEdit');
+      $scope.$broadcast('ngGridEventEndCellEdit');
       KeywordsRepo.deleteOne(keyword)
         .then(function() {
           KeywordsRepo.readAll()
@@ -110,11 +110,11 @@
     };
 
     $scope.stopEditingKeywordCategory = function() {
-      $scope.broadcast('ngGridEventEndCellEdit');
+      $scope.$broadcast('ngGridEventEndCellEdit');
     };
 
     $scope.$on('ngGridEventRows', function(newRows) {
-      $scope.broadcast('ngGridEventEndCellEdit');
+      $scope.$broadcast('ngGridEventEndCellEdit');
     });
 
   });

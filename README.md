@@ -12,25 +12,26 @@ Following Part 2 of Manuel Kiessling's, *The Node Craftsman Book*.
 
 ##Get started
 
-`npm start` to start server  
-`npm test` run tests
+#####install dependencies
 
-###Components
+* `npm install`
+* `bower install`
 
-####Front end
+#####migrate db
+Substitute environment of choice at the end of command.
 
-* `Bower`:  front-end dependencies
-* AngularJS plugin, `Restangular`: manage webservice calls
+* `./node_modules/.bin/db-migrate up --env dev`
+* `./node_modules/.bin/db-migrate down --env dev`
 
-####Back end
+#####start server
+`npm start`  
+By default, the server is started in 'test' environment.
 
-* `npm`:  back-end dependencies
-* `Percolator`, a library to streamline creation of restful APIs with Node
-* Databases:
-  * environments
-    * testing & development: `sqlite`
-    * production: `MySQL`
-  * database access abstraction: `node-dbi`
-  * versioning details of structural changes to databases: `db-migrate`
-* Testing:
-  * `Jasmine`
+#####run tests
+`npm test`
+
+#####set environment variables
+`KW_ENV='dev'`  
+other accepted values are:  
+* 'test' (default)
+* 'production'

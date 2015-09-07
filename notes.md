@@ -1,4 +1,6 @@
-#Milestone 2: API Responds with db content
+#Notes
+
+##API Responding with db content
 
 Development & test environments are using `sqlite3`, while production
 environment will use `mysql`.
@@ -18,3 +20,18 @@ sqlite> CREATE TABLE keyword (id INTEGER PRIMARY KEY, value TEXT, categoryID INT
 sqlite> CREATE TABLE category (id INTEGER PRIMARY KEY, name TEXT);
 sqlite> .quit
 ```
+
+---
+
+##Migrations
+
+Create a `database.json` file in project root, to define connection parameters
+for different environments.
+
+Use the `db-migrate` module. It will generate migration files and, by default,
+put them in the `migrations/` directory.
+
+####sample commands:
+generate a migration
+
+`./node_modules/.bin/db-migrate create createKeywordAndCategoryTable --env test`
