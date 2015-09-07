@@ -8,7 +8,7 @@ module.exports = function(port) {
   var server = new Percolator({
     'port': port,
     'autoLink': false,
-    'staticDir': path.resolve(path.join(__dirname, '../../', 'public'))
+    'staticDir': path.resolve(path.join(__dirname, '..', 'public'))
   });
 
   server.route('/api/keywords', {

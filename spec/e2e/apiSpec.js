@@ -3,8 +3,8 @@
 var request = require('request');
 var async   = require('async');
 
-var Server        = require('../../src/backend/server.js');
-var dbSession     = require('../../src/backend/dbSession.js');
+var Server        = require('../../app/server.js');
+var dbSession     = require('../../app/dbSession.js');
 var resetDatabase = require('../resetDatabase.js');
 
 describe('The API', function() {

@@ -3,7 +3,7 @@
 var DBWrapper = require('node-dbi').DBWrapper;
 
 var env       = require('./env.js');
-var dbOptions = require('../../database.json')[env];
+var dbOptions = require('../database.json')[env];
 
 var dbWrapper;
 

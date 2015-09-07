@@ -1,7 +1,7 @@
 'use strict';
 
 var async = require('async');
-var env       = require('../src/backend/env.js');
+var env       = require('../app/env.js');
 var dbOptions = require('../database.json')[env];
 
 module.exports = function(dbSession, callback) {
